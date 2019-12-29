@@ -1,32 +1,53 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+    <div id="box">
+      <span class="title">12.12买买买</span>
+      <div class="nav">
+        <router-link to="/login">商品列表</router-link>
+        <router-link to="/car">购物车
+          <template v-if="$store.state.shops">({{$store.state.shops | totalNums}})</template>
+        </router-link>
+      </div>
     </div>
-    <router-view/>
+    <router-view />
   </div>
 </template>
-
-<style lang="less">
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
+<script>
+  export default {
+    filters: {
+      totalNums(shops) {
+        let nums = null;
+        shops.forEach(item => {
+          nums += item.counts
+        })
+        return nums
+      }
     }
   }
-}
+</script>
+
+<style lang="less">
+  #box {
+    width: 100%;
+    height: 200px;
+    background-color: yellowgreen;
+    position: relative;
+    text-align: center;
+
+    .title {
+      font-size: 100px;
+      line-height: 200px;
+    }
+  }
+
+  .nav {
+    position: absolute;
+    top: 160px;
+    left: 50%;
+    margin-left: -50px;
+
+    a {
+      margin-right: 30px;
+    }
+  }
 </style>
